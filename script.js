@@ -13,8 +13,8 @@ let getUsers = async function () {
 function renderUsers() {
 
     getUsers().then(users => {
-
-
+        const appendContainer = document.querySelector(".userList");
+        appendContainer.setAttribute("class", "container userList");
         contents.innerHTML = "";
         contents.innerHTML = "<div class='info'>Users List : </div>";
 
@@ -129,52 +129,43 @@ async function visitProfile(object) {
 
 //This function would show list of repositories owned by specific used when clicked in show repos button on profile page
 async function viewAllRepos() {
-    const userName = document.querySelector('.mainInfo span').innerText.trim();
+    const userName = document.querySelector('.mainInfo span').innerText;
     console.log(userName);
     const appendContainer = document.querySelector(".userList");
-    //repoData = await JSON.parse(repoData);
-    fetch(`https:/api.github.com/users/${userName}/repos`, { method: "get" })
-    .then(obj=>obj.json())
-    .then((obj)=>{
+    let repoData = await fetch(`https://api.github.com/users/${userName}/repos`);
+    repoData = await repoData.json();
+    appendContainer.setAttribute("class", "container-fluid userList");
+    appendContainer.innerHTML = "";
+    appendContainer.innerHTML = "<div class='row repoContainer'></div>";
 
-        appendContainer.innerHTML = "";
-        appendContainer.innerHTML = "<div class='row repoContainer'></div>";
-    
-        obj.forEach(repo => {
-    
-            appendContainer.querySelector(".repoContainer").innerHTML += `
-                    <a href="https://github.com/${repo['owner'].login}/${repo.name}" class="col-sm-3 head">
-                        <div class="content">
-                            <div class="title">${repo.name}</div>
-                            <strong>Click the tab to access the repository</strong>
-                            <ul class="lis">
-                                <li>Repo Name : "${repo.owner.login}/${repo.name}"</li>
-                                <li>IsPrivate : ${repo.private} </li>
-                                <li>Description : ${repo.description}</li>
-                                <li>Language : ${repo.language}</li>
-                                <li>STARS : ${repo.stargazers_count}</li>
-                                <li>Watchers : ${repo.watchers_count}</li>
-                                <li>FORKS : ${repo.forks_count}</li>
-                                <li>Visibility : ${repo.visibility}</li>
-                                <li>Issues Open :${repo.open_issues}</li>
-                                <li>Branch : ${repo.default_branch}</li>
-                                <li>Last Update : ${repo.updated_at}</li>
-                                <li>Created At : ${repo.created_at}</li>
-                            </ul>
-                        </div>
-                    </a>
-            
-            
-            `;
-    
-        })
-        appendContainer.setAttribute("class", "container-fluid");
-    
+    repoData.forEach(repo => {
+
+        appendContainer.querySelector(".repoContainer").innerHTML += `
+                <a href="https://github.com/${repo.owner.login}/${repo.name}" class="col-sm-3 head">
+                    <div class="content">
+                        <div class="title">${repo.name}</div>
+                        <strong>Click the tab to access the repository</strong>
+                        <ul class="lis">
+                            <li>Repo Name : "${repo.owner.login}/${repo.name}"</li>
+                            <li>IsPrivate : ${repo.private} </li>
+                            <li>Description : ${repo.description}</li>
+                            <li>Language : ${repo.language}</li>
+                            <li>STARS : ${repo.stargazers_count}</li>
+                            <li>Watchers : ${repo.watchers_count}</li>
+                            <li>FORKS : ${repo.forks_count}</li>
+                            <li>Visibility : ${repo.visibility}</li>
+                            <li>Issues Open :${repo.open_issues}</li>
+                            <li>Branch : ${repo.default_branch}</li>
+                            <li>Last Update : ${repo.updated_at}</li>
+                            <li>Created At : ${repo.created_at}</li>
+                        </ul>
+                    </div>
+                </a>
+        
+        
+        `;
 
     })
-    .catch(error=>console.log(error))
-    
-    
 
 }
 
