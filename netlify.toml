@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://elegant-einstein-b2c46b.netlify.app/*"
-  to = "https://api.github.com/*"
+  from = "https://elegant-einstein-b2c46b.netlify.app/api.github.com/*"
+  to = "https://api.github.com/:splat"
   status = 301
   force = true    
