@@ -1,5 +1,5 @@
 [[redirects]]
-  from = "https://elegant-einstein-b2c46b.netlify.app/api.github.com/users/mojombo/repos/*"
-  to = "https://api.github.com/users/mojombo/repos/:splat"
-    status = 200
-    force = true
+  from = "https://elegant-einstein-b2c46b.netlify.app"
+  to = "https://api.github.com"
+  status = 301
+  force = true    
