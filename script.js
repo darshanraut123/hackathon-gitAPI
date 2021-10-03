@@ -132,7 +132,6 @@ async function viewAllRepos() {
     const userName = document.querySelector('.mainInfo span').innerText.trim();
     console.log(userName);
     const appendContainer = document.querySelector(".userList");
-    appendContainer.setAttribute("class", "container-fluid");
     let repoData = await fetch(`https:/api.github.com/users/${userName}/repos`, { method: "get" });
     repoData = await repoData.json();
     appendContainer.innerHTML = "";
@@ -141,7 +140,7 @@ async function viewAllRepos() {
     repoData.forEach(repo => {
 
         appendContainer.querySelector(".repoContainer").innerHTML += `
-                <a href="https://github.com/${repo.owner.login}/${repo.name}" class="col-sm-3 head">
+                <a href="https://github.com/${repo['owner'].login}/${repo.name}" class="col-sm-3 head">
                     <div class="content">
                         <div class="title">${repo.name}</div>
                         <strong>Click the tab to access the repository</strong>
@@ -166,6 +165,8 @@ async function viewAllRepos() {
         `;
 
     })
+    appendContainer.setAttribute("class", "container-fluid");
+
 
 }
 
